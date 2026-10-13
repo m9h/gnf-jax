@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gnf-jax"
+version = "0.1.0"
+description = "Graph neural fields in JAX: stochastic Wilson-Cowan dynamics on connectome Laplacian eigenmodes with closed-form harmonic and temporal power spectra"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+authors = [{name = "Morgan Hough"}]
+keywords = ["connectome", "harmonics", "wilson-cowan", "neural field", "jax", "fmri", "meg"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Scientific/Engineering",
+]
+dependencies = ["jax>=0.4.30", "numpy>=1.24", "scipy>=1.10"]
+
+[project.optional-dependencies]
+dev = ["pytest>=7", "pytest-xdist"]
+
+[project.urls]
+Homepage = "https://github.com/m9h/gnf-jax"
+Original = "https://github.com/marcoaqil/Graph-Stochastic-Wilson-Cowan-Model"
+
+[tool.setuptools]
+packages = ["gnfjax"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
