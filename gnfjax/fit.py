@@ -27,11 +27,16 @@ def affine_combination(x, p_e, p_i, floor=1e-20):
     return jnp.maximum(x[0] * p_e + x[1] * p_i + x[2], floor)
 
 
+def _safe_norm(x):
+    """Euclidean norm with a finite (zero) gradient at ``x == 0``."""
+    return jnp.sqrt(jnp.sum(x**2) + 1e-300)
+
+
 def log_spectral_distance(model, target, power: int):
     """``(1 + ||log10 m - log10 t||)^p + (1 + ||d log10 m - d log10 t||)^p``."""
     lm, lt = jnp.log10(model), jnp.log10(target)
-    d0 = jnp.linalg.norm(lm - lt)
-    d1 = jnp.linalg.norm(jnp.diff(lm) - jnp.diff(lt))
+    d0 = _safe_norm(lm - lt)
+    d1 = _safe_norm(jnp.diff(lm) - jnp.diff(lt))
     return (1.0 + d0) ** power + (1.0 + d1) ** power
 
 
